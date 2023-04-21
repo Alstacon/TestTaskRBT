@@ -15,7 +15,7 @@ class TeacherViewSet(viewsets.ModelViewSet):
 
 
 class StudentGroupViewSet(viewsets.ModelViewSet):
-    queryset = models.StudentGroup.objects.all()
+    queryset = models.StudentGroup.objects.prefetch_related('students')
     default_serializer_class = serializers.StudentGroupSerializer
 
     serializers = {

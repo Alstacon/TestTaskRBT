@@ -30,7 +30,7 @@ class Teacher(Person):
 
 class StudentGroup(models.Model):
     title = models.CharField(max_length=255, verbose_name='Наименование')
-    students = models.ManyToManyField(Student, verbose_name='Идентификаторы студентов')
+    students = models.ManyToManyField(Student, related_query_name='group', verbose_name='Идентификаторы студентов')
 
     class Meta:
         verbose_name = 'Группа обучаемых'

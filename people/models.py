@@ -5,7 +5,7 @@ class Person(models.Model):
     class Meta:
         abstract = True
 
-    full_name = models.CharField(max_length=255)
+    full_name = models.CharField(max_length=255, verbose_name='ФИО')
 
 
 class Student(Person):
@@ -18,7 +18,7 @@ class Student(Person):
 
 
 class Teacher(Person):
-    degree = models.CharField(max_length=255)
+    degree = models.CharField(max_length=255, verbose_name='Ученая степень')
 
     class Meta:
         verbose_name = 'Преподаватель'
@@ -29,8 +29,8 @@ class Teacher(Person):
 
 
 class StudentGroup(models.Model):
-    title = models.CharField(max_length=255)
-    students = models.ManyToManyField(Student)
+    title = models.CharField(max_length=255, verbose_name='Наименование')
+    students = models.ManyToManyField(Student, verbose_name='Идентификаторы студентов')
 
     class Meta:
         verbose_name = 'Группа обучаемых'

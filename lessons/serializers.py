@@ -1,8 +1,10 @@
 from django.db.models import Q
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from lessons import models
 from people import models as people_models
+from people import serializers as people_serializers
 
 
 class LessonSerializer(serializers.ModelSerializer):
@@ -19,6 +21,7 @@ class LessonSerializer(serializers.ModelSerializer):
         read_only=True,
         slug_field='title'
     )
+    missing_students = people_serializers.StudentSerializer(many=True)
 
     class Meta:
         model = models.Lesson
@@ -27,6 +30,16 @@ class LessonSerializer(serializers.ModelSerializer):
 
 class LessonListSerializer(serializers.ModelSerializer):
     date = serializers.DateTimeField()
+    teacher = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='full_name'
+    )
+
+    student_group = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='title'
+    )
+    missing_students = people_serializers.StudentSerializer(many=True)
 
     class Meta:
         model = models.Lesson
@@ -42,11 +55,18 @@ class LessonCreateUpdateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def validate(self, attrs: dict) -> dict:
-        students: list = attrs.pop('missing_students', [])
-        attrs['missing_students'] = []
-        for student in students:
-            if people_models.StudentGroup.objects.filter(Q(id=attrs['student_group'].id) & Q(students=student)):
-                attrs['missing_students'].append(student)
+        if 'missing_students' in attrs:
+            if not attrs.get('student_group'):
+                raise ValidationError({
+                    'student_group': 'Введите группу обучаемых, чтобы добавить или изменить отсутствующих.'
+                })
+            else:
+                students: list = attrs.pop('missing_students', [])
+                attrs['missing_students'] = []
+                for student in students:
+                    if people_models.StudentGroup.objects.filter(Q(id=attrs['student_group'].id) & Q(students=student)):
+                        attrs['missing_students'].append(student)
+
         return attrs
 
 
@@ -54,7 +74,6 @@ class StudySubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.StudySubject
         fields = '__all__'
-        read_only_fields = ['id']
 
 
 class StudySubjectDetailSerializer(serializers.ModelSerializer):

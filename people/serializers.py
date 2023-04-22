@@ -8,14 +8,12 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Student
         fields = '__all__'
-        read_only_fields = ['id']
 
 
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Teacher
         fields = '__all__'
-        read_only_fields = ['id']
 
 
 class StudentGroupSerializer(serializers.ModelSerializer):
@@ -38,7 +36,6 @@ class StudentGroupCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.StudentGroup
         fields = '__all__'
-        read_only_fields = ['id']
 
     def create(self, validated_data: dict) -> models.StudentGroup:
         students: list = validated_data.pop('students', [])
@@ -60,7 +57,6 @@ class StudentGroupUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.StudentGroup
         fields = '__all__'
-        read_only_fields = ['id']
 
     def update(self, instance: models.StudentGroup, validated_data: dict) -> models.StudentGroup:
         with transaction.atomic():

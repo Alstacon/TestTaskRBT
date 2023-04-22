@@ -21,11 +21,12 @@ class Lesson(models.Model):
     )
     study_subject = models.ForeignKey(StudySubject, on_delete=models.CASCADE, verbose_name='Предмет обучения',
                                       related_name='lesson')
-    teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT, verbose_name='Преподаватель')
-    student_group = models.ForeignKey(StudentGroup, on_delete=models.PROTECT, verbose_name='Группы обучаемых')
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Преподаватель')
+    student_group = models.ForeignKey(StudentGroup, on_delete=models.SET_NULL, null=True, blank=True,
+                                      verbose_name='Группы обучаемых')
     date = models.DateTimeField(verbose_name='Дата проведения')
     status = models.BooleanField(default=False, choices=LESSON_STATUS, verbose_name='Состояние занятия')
-    missing_students = models.ManyToManyField(Student, null=True, blank=True, verbose_name='Отсутствующие студенты')
+    missing_students = models.ManyToManyField(Student, blank=True, verbose_name='Отсутствующие студенты')
 
     class Meta:
         verbose_name = 'Занятие'

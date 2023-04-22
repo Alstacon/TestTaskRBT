@@ -27,9 +27,9 @@ class LessonViewSet(viewsets.ModelViewSet):
     filterset_class = LessonFilter
 
     serializers = {
-        'create': serializers.LessonCreateUpdateSerializer,
-        'update': serializers.LessonCreateUpdateSerializer,
-        'partial_update': serializers.LessonCreateUpdateSerializer,
+        'create': serializers.LessonCreateSerializer,
+        'update': serializers.LessonUpdateSerializer,
+        'partial_update': serializers.LessonUpdateSerializer,
     }
 
     def get_serializer_class(self):

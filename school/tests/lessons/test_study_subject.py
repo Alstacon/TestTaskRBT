@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from django.utils import timezone
 
 from django.test import TestCase
 from django.urls import reverse
@@ -24,7 +24,7 @@ class TestStudySubject(TestCase):
         cls.subject_2 = StudySubject.objects.create(title='History')
 
         cls.lesson_1 = Lesson.objects.create(
-            date=datetime.today(),
+            date=timezone.now(),
             teacher=cls.teacher_1,
             study_subject=cls.subject_1,
             student_group=cls.group_1,

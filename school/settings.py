@@ -13,7 +13,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['127.0.0.1',]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -93,26 +93,8 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
 
 STATIC_URL = '/static/'
-
-LOGGING = {
-    'disable_existing_loggers': False,
-    'version': 1,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'level': 'DEBUG'
-        },
-    },
-    'loggers': {
-        'django.db.backends': {
-            'level': 'DEBUG',
-            'handlers': ['console', ],
-        },
-    }
-}
 
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': '%d/%m/%Y %H:%M:%S',

@@ -59,6 +59,7 @@ class StudentGroupUpdateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def update(self, instance: models.StudentGroup, validated_data: dict) -> models.StudentGroup:
+        """"""
         with transaction.atomic():
             if 'students' in validated_data:
                 instance.students.clear()

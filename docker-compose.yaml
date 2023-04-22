@@ -19,6 +19,25 @@ services:
       retries: 3
       timeout: 3s
 
+  api:
+    build:
+      context: .
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+    container_name: school_api
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
+
+
+
 
 volumes:
   school_pg_data:

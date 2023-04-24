@@ -24,14 +24,15 @@ ___
 
 ### Запуск проекта:
 
-В корневой директории: `docker-compose up --build -d`.
+1) Переименовать `.env-example` в `.env` и заполнить валидными значениями
+2) В корневой директории: `docker-compose up --build -d`.
 
 Сервер доступен по адресу: `localhost:8000`.
 
 ### Запуск тестов:
-
-1) В корневой директории: `docker-compose up db -d`
-2) `python manage.py test .`
+1) Переименовать `.env-example` в `.env` и заполнить валидными значениями
+2) В корневой директории: `docker-compose up db -d`
+3) `python manage.py test .`
 
 ### Функционал и архитектура:
 
